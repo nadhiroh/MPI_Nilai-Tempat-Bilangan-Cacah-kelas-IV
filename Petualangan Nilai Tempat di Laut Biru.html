@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Nilai Tempat di Laut Biru</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#06397a;--sky:#5fd4ff;--sea:#0a8cff;--deep:#0057c8;--sun:#ffd93d;--ok:#1fb25a;--bad:#ff5c7a;--card:#ffffff;--soft:#e6f6ff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:'Baloo 2','Comic Sans MS','Trebuchet MS',sans-serif;font-size:18px;color:var(--ink);background:linear-gradient(#7fe0ff,#0a8cff 50%,#0057c8) fixed;overflow-x:hidden}
+.bub{position:fixed;bottom:-60px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.7);animation:rise linear infinite;pointer-events:none;z-index:0}
+@keyframes rise{to{transform:translateY(-120vh) translateX(30px)}}
+.swim{position:fixed;font-size:42px;left:-80px;animation:swim linear infinite;pointer-events:none;z-index:0;opacity:.9}
+@keyframes swim{to{transform:translateX(calc(100vw + 160px))}}
+.floor{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;font-size:38px;pointer-events:none;z-index:0}
+.floor span{display:inline-block;transform-origin:bottom;animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+header,main,nav{position:relative;z-index:1;max-width:940px;margin:0 auto;padding:0 14px}
+header{padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff}
+header b{font-size:20px;text-shadow:0 2px 0 var(--deep)}
+.dots{display:flex;gap:8px}
+.dots button{width:30px;height:30px;border-radius:50%;border:3px solid #fff;background:rgba(255,255,255,.25);color:#fff;font:inherit;font-weight:800;cursor:pointer;padding:0}
+.dots button.on{background:var(--sun);color:var(--ink);transform:scale(1.15)}
+.slide{display:none;margin:14px auto 90px}
+.slide.on{display:block;animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:none;opacity:1}}
+.card{background:var(--card);border:5px solid #fff;border-radius:30px;box-shadow:0 10px 0 rgba(0,50,130,.3);padding:22px}
+h1,h2{margin:0 0 8px;line-height:1.1}
+h1{font-size:clamp(30px,6vw,50px);color:var(--deep)}
+h2{font-size:clamp(24px,4.5vw,34px);color:var(--deep)}
+p{margin:8px 0;line-height:1.45}
+.mascot{font-size:84px;display:inline-block;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px) rotate(4deg)}}
+.say{background:var(--soft);border:3px dashed var(--sea);border-radius:22px;padding:12px 16px;margin:10px 0}
+.btn{font:inherit;font-weight:800;font-size:20px;border:0;border-radius:999px;padding:10px 26px;background:var(--sun);color:var(--ink);box-shadow:0 6px 0 #d9a900;cursor:pointer;transition:transform .1s}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #d9a900}
+.btn.blue{background:var(--sea);color:#fff;box-shadow:0 6px 0 var(--deep)}
+.btn:focus-visible,.dots button:focus-visible,.opt:focus-visible,.arr:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+input{font:inherit;font-size:20px;padding:8px 16px;border-radius:999px;border:3px solid var(--sea);width:min(300px,100%);color:var(--ink)}
+.tabel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:12px 0}
+.col{background:var(--soft);border:3px solid var(--sea);border-radius:20px;padding:10px 4px;cursor:pointer;transition:.2s}
+.col:hover,.col.hi{background:var(--sun);transform:translateY(-6px)}
+.col .ic{font-size:34px}.col .dg{font-size:46px;font-weight:800;color:var(--deep)}
+.col small{display:block;font-weight:700}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+.mesin{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.mcol{background:var(--soft);border:3px solid var(--sea);border-radius:20px;padding:8px 2px;text-align:center}
+.arr{width:46px;height:36px;border:0;border-radius:12px;background:var(--sea);color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 0 var(--deep)}
+.big{font-size:46px;font-weight:800;color:var(--deep);line-height:1.1}
+.pile{min-height:34px;font-size:20px;word-break:break-all}
+.out{background:var(--ink);color:#fff;border-radius:20px;padding:10px 14px;text-align:center}
+.out b{color:var(--sun);font-size:34px}
+.bar{height:22px;border-radius:99px;background:rgba(0,87,200,.15);position:relative;margin:6px 0 14px}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#4fd1ff,var(--sea));transition:width .5s}
+.bar em{position:absolute;top:-12px;font-style:normal;font-size:30px;transition:left .5s;transform:translateX(-50%)}
+.q{font-size:clamp(21px,4vw,27px);font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}.tabel,.mesin{gap:4px}.big{font-size:36px}}
+.opt{font:inherit;font-weight:700;font-size:20px;text-align:left;padding:12px 16px;border-radius:20px;border:4px solid var(--sea);background:#fff;color:var(--ink);cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){background:var(--soft);transform:scale(1.03)}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:#fff;animation:jump .5s}
+.opt.no{background:var(--bad);border-color:var(--bad);color:#fff;animation:shake .4s}
+.opt.key{border-color:var(--ok);background:#d9f8e5}
+@keyframes jump{40%{transform:scale(1.12) rotate(-2deg)}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.fb{margin-top:14px;border-radius:22px;padding:14px 16px}
+.fb.ok{background:#d9f8e5;border:3px solid var(--ok)}
+.fb.no{background:#fff0f3;border:3px solid var(--bad)}
+.stars{font-size:56px;letter-spacing:6px}
+.mood{font-size:46px;background:none;border:0;cursor:pointer;transition:.2s;padding:4px}
+.mood:hover,.mood.on{transform:scale(1.3)}
+.chk{display:flex;gap:10px;align-items:center;background:var(--soft);border-radius:16px;padding:8px 12px;margin:6px 0;cursor:pointer}
+.chk input{width:24px;height:24px;accent-color:var(--sea)}
+nav{position:fixed;left:0;right:0;bottom:calc(46px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;pointer-events:none;max-width:940px}
+nav .btn{pointer-events:auto}
+.conf{position:fixed;font-size:30px;pointer-events:none;z-index:9;animation:fly 1.2s ease-out forwards}
+@keyframes fly{from{opacity:1}to{opacity:0;transform:translate(var(--x),var(--y)) rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<div class="floor" aria-hidden="true"><span>🪸</span><span>🌿</span><span>🐚</span><span>🦀</span><span>🪸</span><span>⭐</span><span>🌿</span></div>
+<header><b>🌊 Laut Biru Matematika</b><div class="dots" id="dots" role="tablist" aria-label="Pilih bagian"></div></header>
+<main>
+
+<!-- 1 PEMBUKA -->
+<section class="slide card on" id="s0" style="text-align:center">
+  <div class="mascot">🐙</div>
+  <h1>Petualangan Nilai Tempat di Laut Biru</h1>
+  <p><b>Matematika · Kelas IV · Fase B</b><br>Bilangan Cacah sampai 10.000</p>
+  <div class="say">Halo, teman-teman! Aku Opi si gurita. Ayo menyelam bersamaku dan jadi Penjelajah Angka! 🫧<br>Siapa namamu?</div>
+  <p><input id="nama" placeholder="Tulis namamu di sini" maxlength="20" aria-label="Nama murid"></p>
+  <p><button class="btn" onclick="mulai()">Ayo Menyelam! 🤿</button></p>
+</section>
+
+<!-- 2 TUJUAN -->
+<section class="slide card" id="s1">
+  <h2>🎯 Misi Kita Hari Ini</h2>
+  <div class="say">🐢 Kak Kura-kura berkata: “<span class="nm">Teman</span>, ini misi menyelam kita!”</div>
+  <div class="tabel" style="grid-template-columns:1fr">
+    <div class="col hi" style="cursor:default"><span class="ic">⭐</span><p style="margin:0"><b>Tujuan Pembelajaran</b><br>Murid dapat menentukan nilai tempat bilangan cacah sampai 10.000.</p></div>
+  </div>
+  <p>Setelah petualangan ini, kamu akan bisa:</p>
+  <p>🐚 Menyebutkan tempat satuan, puluhan, ratusan, dan ribuan.<br>🐠 Menentukan nilai sebuah angka dalam bilangan.<br>🐳 Menuliskan bilangan dalam bentuk panjang.</p>
+</section>
+
+<!-- 3 MATERI -->
+<section class="slide card" id="s2">
+  <h2>📚 Harta Karun Nilai Tempat</h2>
+  <p>Setiap angka punya “rumah” sendiri di terumbu karang. Rumahnya menentukan nilainya. <b>Ketuk rumahnya!</b> 👇</p>
+  <div class="tabel" id="tabel"></div>
+  <div class="say" id="jelas">Ketuk salah satu rumah untuk melihat rahasianya. Contoh bilangan kita: <b>3.652</b></div>
+  <div class="say">🦀 <b>Ingat ya:</b> hitung tempatnya dari <b>kanan</b>: satuan → puluhan → ratusan → ribuan. Bilangan <b>10.000</b> dibaca “sepuluh ribu”, yaitu 1 puluh ribuan. Letak angka 0 tetap penting sebagai penjaga tempat!</div>
+</section>
+
+<!-- 4 AKTIVITAS -->
+<section class="slide card" id="s3">
+  <h2>🎮 Mesin Gelembung Angka</h2>
+  <p>Tekan ▲ dan ▼ untuk mengubah angka. Lihat apa yang terjadi pada nilainya!</p>
+  <div class="mesin" id="mesin"></div>
+  <div class="out" id="out"></div>
+  <hr style="border:0;border-top:3px dashed var(--sea);margin:18px 0">
+  <h2>🎯 Tantangan Penyelam</h2>
+  <div class="say" id="tuj"></div>
+  <div class="row"><button class="btn blue" onclick="cek()">Periksa Jawabanku</button><button class="btn" onclick="tantang()">Tantangan Baru 🔄</button></div>
+  <p id="hasilT" style="text-align:center;font-weight:700;min-height:30px" aria-live="polite"></p>
+  <p style="text-align:center"><button class="btn" onclick="go(4)">Ke Kuis Seru! 🏆</button></p>
+</section>
+
+<!-- 5 KUIS -->
+<section class="slide card" id="s4">
+  <div class="row" style="justify-content:space-between"><b id="no">Soal 1 dari 30</b><b>⭐ Skor: <span id="sk">0</span></b></div>
+  <div class="bar"><i id="pb" style="width:0"></i><em id="ikan">🐠</em></div>
+  <div class="q" id="soal"></div>
+  <div class="opts" id="opts"></div>
+  <div id="fb"></div>
+  <p style="text-align:center"><button class="btn blue" id="lanjut" style="display:none" onclick="lanjut()">Soal Berikutnya ➜</button></p>
+</section>
+
+<!-- 6 HASIL & REFLEKSI -->
+<section class="slide card" id="s5" style="text-align:center">
+  <h2>🏁 Hasil Petualanganmu</h2>
+  <div class="stars" id="stars"></div>
+  <div class="big" id="nilai"></div>
+  <div class="say" id="pesan"></div>
+  <h2 style="margin-top:18px">💭 Refleksi</h2>
+  <p>Bagaimana perasaanmu belajar hari ini?</p>
+  <div id="moods"><button class="mood" aria-label="Senang sekali">😄</button><button class="mood" aria-label="Senang">🙂</button><button class="mood" aria-label="Biasa saja">😐</button><button class="mood" aria-label="Masih bingung">😕</button></div>
+  <div style="text-align:left;max-width:560px;margin:8px auto">
+    <label class="chk"><input type="checkbox"> Aku bisa menyebutkan tempat satuan sampai ribuan.</label>
+    <label class="chk"><input type="checkbox"> Aku bisa menentukan nilai suatu angka.</label>
+    <label class="chk"><input type="checkbox"> Aku bisa menulis bentuk panjang bilangan.</label>
+  </div>
+  <div class="say" id="refl">Centang yang sudah kamu kuasai, lalu pilih wajah perasaanmu.</div>
+  <button class="btn" onclick="ulang()">Menyelam Lagi 🔁</button>
+</section>
+</main>
+
+<nav><button class="btn blue" id="bk" onclick="go(cur-1)">⬅ Kembali</button><button class="btn" id="nx" onclick="go(cur+1)">Lanjut ➡</button></nav>
+
+<script>
+const $=s=>document.querySelector(s),fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const PL=['satuan','puluhan','ratusan','ribuan'],IC=['🐚','🐠','🐙','🐳'];
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let nama='Teman',cur=0;
+
+/* ---------- latar laut ---------- */
+for(let i=0;i<14;i++){const b=document.createElement('span');b.className='bub';const s=10+Math.random()*30;b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;animation-duration:${8+Math.random()*10}s;animation-delay:${-Math.random()*12}s`;document.body.appendChild(b)}
+['🐟','🐠','🐡','🐢'].forEach((f,i)=>{const s=document.createElement('span');s.className='swim';s.textContent=f;s.style.cssText=`top:${18+i*17}vh;animation-duration:${22+i*7}s;animation-delay:${-i*6}s`;s.setAttribute('aria-hidden','true');document.body.appendChild(s)});
+
+/* ---------- navigasi ---------- */
+const NM=['Pembuka','Tujuan','Materi','Aktivitas','Kuis','Hasil'];
+NM.forEach((n,i)=>{const b=document.createElement('button');b.textContent=i+1;b.title=n;b.setAttribute('aria-label',n);b.onclick=()=>go(i);$('#dots').appendChild(b)});
+function go(i){if(i<0||i>5)return;cur=i;document.querySelectorAll('.slide').forEach((s,k)=>s.classList.toggle('on',k===i));[...$('#dots').children].forEach((b,k)=>b.classList.toggle('on',k===i));$('#bk').style.visibility=i?'visible':'hidden';$('#nx').style.visibility=(i===5||i===4)?'hidden':'visible';scrollTo({top:0,behavior:'smooth'})}
+function mulai(){nama=$('#nama').value.trim()||'Teman';document.querySelectorAll('.nm').forEach(e=>e.textContent=nama);go(1)}
+
+/* ---------- materi ---------- */
+const ex=3652,exd=String(ex).split('');
+for(let p=3;p>=0;p--){const d=exd[3-p];const c=document.createElement('div');c.className='col';c.tabIndex=0;c.setAttribute('role','button');
+c.innerHTML=`<div class="ic">${IC[p]}</div><div class="dg">${d}</div><small>${cap(PL[p])}</small>`;
+const f=()=>{document.querySelectorAll('#tabel .col').forEach(x=>x.classList.remove('hi'));c.classList.add('hi');$('#jelas').innerHTML=`${IC[p]} Angka <b>${d}</b> ada di tempat <b>${PL[p]}</b>, jadi nilainya <b>${d} × ${fmt(10**p)} = ${fmt(d*10**p)}</b>.<br>Bentuk panjang: <b>${exd.map((x,i)=>fmt(x*10**(3-i))).join(' + ')} = 3.652</b>`;boom(c,4)};
+c.onclick=f;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}};$('#tabel').appendChild(c)}
+
+/* ---------- aktivitas: mesin ---------- */
+const D=[3,6,5,2];
+function drawM(){const m=$('#mesin');m.innerHTML='';D.forEach((d,i)=>{const p=3-i;const c=document.createElement('div');c.className='mcol';
+c.innerHTML=`<b>${cap(PL[p])}</b><div><button class="arr" aria-label="Tambah ${PL[p]}" onclick="chg(${i},1)">▲</button></div><div class="big">${d}</div><div><button class="arr" aria-label="Kurangi ${PL[p]}" onclick="chg(${i},-1)">▼</button></div><div class="pile">${IC[p].repeat(d)||'∅'}</div><small>${d} × ${fmt(10**p)} = <b>${fmt(d*10**p)}</b></small>`;m.appendChild(c)});
+const n=+D.join('');$('#out').innerHTML=`Bilangannya: <b>${fmt(n)}</b><br>${D.map((d,i)=>fmt(d*10**(3-i))).join(' + ')}`}
+function chg(i,v){D[i]=(D[i]+v+10)%10;drawM()}
+let T=[];
+function tantang(){T=[0,0,0,0].map(()=>1+(Math.random()*9|0));$('#tuj').innerHTML=`🐙 Buat bilangan dengan <b>${T[0]} ribuan, ${T[1]} ratusan, ${T[2]} puluhan,</b> dan <b>${T[3]} satuan</b>!`;$('#hasilT').textContent=''}
+function cek(){const ok=D.join('')===T.join('');$('#hasilT').innerHTML=ok?`🎉 Hebat, ${nama}! Bilangannya <b>${fmt(+T.join(''))}</b>. Kamu penyelam jempolan!`:`🌊 Hampir! Periksa lagi tiap rumah angkanya. Bilangan yang kamu buat: ${fmt(+D.join(''))}`;if(ok)boom($('#hasilT'),14)}
+
+/* ---------- soal ---------- */
+const Q=[];
+function add(q,right,wrong,exp){Q.push({q,exp,o:sh([{t:right,ok:1},...wrong.map(t=>({t}))])})}
+const sw=(a,i,j)=>{const x=a.slice();[x[i],x[j]]=[x[j],x[i]];return +x.join('')};
+const bp=n=>String(n).split('').map((d,i)=>fmt(d*10**(3-i))).join(' + ');
+[3482,5917,7264,6135,8409,2756,9031,4628].forEach((n,i)=>{const p=[0,1,2,3,1,2,0,3][i],d=String(n)[3-p];
+add(`Pada bilangan ${fmt(n)}, angka ${d} berada di tempat ...`,cap(PL[p]),PL.filter((_,k)=>k!=p).map(cap),`Hitung dari kanan: satuan, puluhan, ratusan, ribuan. Pada ${fmt(n)}, angka ${d} berada di tempat ${PL[p]}.`)});
+[7352,1986,6240,8514,3697,9275,4081,5628].forEach((n,i)=>{const p=[3,2,1,0,2,3,1,2][i],d=String(n)[3-p];
+add(`Nilai angka ${d} pada bilangan ${fmt(n)} adalah ...`,fmt(d*10**p),sh([0,1,2,3].filter(k=>k!=p)).map(k=>fmt(d*10**k)),`Angka ${d} berada di tempat ${PL[p]}, sehingga nilainya ${d} × ${fmt(10**p)} = ${fmt(d*10**p)}.`)});
+[[3,5,2,8],[6,1,4,9],[2,6,7,5],[8,3,1,6],[4,7,2,9],[9,2,5,1]].forEach(t=>{const n=+t.join('');
+add(`Bilangan yang terdiri dari ${t[0]} ribuan, ${t[1]} ratusan, ${t[2]} puluhan, dan ${t[3]} satuan adalah ...`,fmt(n),[sw(t,0,1),sw(t,2,3),+t.slice().reverse().join('')].map(fmt),`${t[0]} ribuan = ${fmt(t[0]*1000)}, ${t[1]} ratusan = ${fmt(t[1]*100)}, ${t[2]} puluhan = ${t[2]*10}, ${t[3]} satuan = ${t[3]}. Jumlahnya ${fmt(n)}.`)});
+[4572,8136,2945,7618].forEach(n=>{const a=String(n).split('');
+add(`Bentuk panjang dari ${fmt(n)} adalah ...`,bp(n),[a.join(' + '),bp(sw(a,0,1)),bp(sw(a,2,3))],`Setiap angka dikalikan nilai tempatnya: ${bp(n)} = ${fmt(n)}.`)});
+[[4813,2],[2957,1]].forEach(([n,p])=>{const a=String(n).split(''),d=a[3-p];
+add(`Angka yang berada di tempat ${PL[p]} pada bilangan ${fmt(n)} adalah ...`,d,a.filter(x=>x!=d),`Dari kanan: satuan, puluhan, ratusan, ribuan. Tempat ${PL[p]} diisi angka ${d}.`)});
+add('Bilangan yang 1 lebih banyak dari 9.999 adalah ...','10.000',['9.990','10.100','1.000'],'9.999 ditambah 1 menjadi 10.000. Semua tempatnya penuh, jadi lahir tempat baru: puluh ribuan!');
+add('Pada bilangan 10.000, angka 1 berada di tempat ...','Puluh ribuan',['Ribuan','Ratusan','Satuan'],'Bilangan 10.000 punya lima angka. Dari kanan: satuan, puluhan, ratusan, ribuan, puluh ribuan. Angka 1 ada di tempat paling kiri, yaitu puluh ribuan.');
+
+/* ---------- kuis ---------- */
+const PUJI=['Hebat sekali','Luar biasa','Pintar sekali','Keren','Tepat sekali','Mantap','Wow, jempol'];
+let qi=0,score=0,lock=false;
+function boom(el,n=10){const r=el.getBoundingClientRect(),E=['⭐','🫧','🐠','✨','🐚'];for(let i=0;i<n;i++){const c=document.createElement('span');c.className='conf';c.textContent=E[i%5];c.style.cssText=`left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;--x:${(Math.random()-.5)*300}px;--y:${-60-Math.random()*200}px`;c.setAttribute('aria-hidden','true');document.body.appendChild(c);setTimeout(()=>c.remove(),1300)}}
+function tampil(){lock=false;const q=Q[qi];$('#no').textContent=`Soal ${qi+1} dari 30`;$('#sk').textContent=score;$('#pb').style.width=qi/30*100+'%';$('#ikan').style.left=qi/30*100+'%';
+$('#soal').textContent=q.q;$('#fb').innerHTML='';$('#lanjut').style.display='none';
+const o=$('#opts');o.innerHTML='';q.o.forEach((x,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span style="color:var(--sea)">${'ABCD'[i]}.</span> ${x.t}`;b.onclick=()=>jawab(b,x);o.appendChild(b)})}
+function jawab(b,x){if(lock)return;lock=true;const q=Q[qi],bs=[...document.querySelectorAll('.opt')];bs.forEach(e=>e.disabled=true);
+const benar=q.o.find(z=>z.ok).t;
+if(x.ok){score++;b.classList.add('ok');$('#sk').textContent=score;boom(b,14);
+$('#fb').innerHTML=`<div class="fb ok" aria-live="polite">🎉 <b>${PUJI[qi%PUJI.length]}, ${nama}!</b> Jawabanmu benar. Kamu bintang laut yang cemerlang! ⭐</div>`}
+else{b.classList.add('no');bs.forEach((e,i)=>{if(q.o[i].ok)e.classList.add('key')});
+$('#fb').innerHTML=`<div class="fb no" aria-live="polite">🐙 <b>Belum tepat, tidak apa-apa!</b> Yuk pahami bersama.<br>${q.exp}<br><b>Jawaban yang benar: ${benar}</b></div>`}
+$('#lanjut').style.display='inline-block';$('#lanjut').textContent=qi===29?'Lihat Hasil 🏁':'Soal Berikutnya ➜'}
+function lanjut(){if(qi===29){hasil();go(5)}else{qi++;tampil()}}
+function hasil(){const n=Math.round(score/30*100),s=n>=90?3:n>=70?2:1;
+$('#stars').textContent='⭐'.repeat(s)+'☆'.repeat(3-s);$('#nilai').textContent=`${score} benar dari 30 (nilai ${n})`;
+$('#pesan').innerHTML=n>=90?`🏆 Luar biasa, ${nama}! Kamu Penjelajah Angka Samudra!`:n>=70?`🐬 Bagus, ${nama}! Sedikit lagi kamu jadi Penjelajah Angka Samudra.`:`🐢 Terima kasih sudah berusaha, ${nama}! Yuk ulangi materi dan mesin gelembung, kamu pasti bisa!`;boom($('#stars'),20)}
+function ulang(){qi=0;score=0;tampil();go(2)}
+
+/* ---------- refleksi ---------- */
+const RF={0:'Senang itu menular! Terus semangat belajar ya. 🌟',1:'Bagus! Belajar jadi menyenangkan kalau kita terus berlatih. 🐠',2:'Tidak apa-apa. Coba main Mesin Gelembung Angka lagi supaya makin paham. 🫧',3:'Bingung itu wajar, kok. Tanyakan pada gurumu dan ulangi materi bersama ya. 🐙'};
+document.querySelectorAll('.mood').forEach((m,i)=>m.onclick=()=>{document.querySelectorAll('.mood').forEach(x=>x.classList.remove('on'));m.classList.add('on');$('#refl').textContent=RF[i]+' Kamu sudah menguasai '+document.querySelectorAll('#s5 .chk input:checked').length+' dari 3 tujuan.'});
+
+drawM();tantang();tampil();go(0);
+</script>
+</body>
+</html>
